@@ -4,7 +4,8 @@ const mongoSanitize = require('express-mongo-sanitize')
 const rateLimit = require('express-rate-limit')
 
 const authRoutes = require('./routes/authRoutes')
-const productRoutes = require('./routes/productRoutes')
+const apiRoutes = require('./routes/apiRoutes')
+const categoriaRoutes = require('./routes/categoriaRoutes')
 const errorHandler = require('./middlewares/errorHandler')
 
 const app = express()
@@ -20,8 +21,10 @@ const limiter = rateLimit({
 })
 app.use('/api', limiter)
 
+app.use('/api', apiRoutes)
 app.use('/api/v1/auth', authRoutes)
-app.use('/api/v1/products', productRoutes)
+app.use('/api/categorias', categoriaRoutes)
+app.use('/api/v1/categorias', categoriaRoutes)
 
 app.all('*', (req, res) => {
   res.status(404).json({ status: 'error', message: `rota ${req.originalUrl} nao existe` })
